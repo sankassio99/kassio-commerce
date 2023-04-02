@@ -9,25 +9,30 @@ import OrderRepositoryFake from "../src/infra/repository/orderRepositoryFake";
 import sinon from "sinon";
 import Product from "../src/domain/entities/Product";
 import ICurrencyGateway from "../src/application/gateway/iCurrencyGateway";
+import IDeliveryGateway, { Input, Output } from "../src/application/gateway/IDeliveryGateway";
+import DeliveryGateway from "../src/infra/gateway/DeliveryGateway";
 
 let checkout: Checkout;
 let currencyGateway: ICurrencyGateway;
 let productRepository: IProductRepository;
 let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
+let deliveryGateway: IDeliveryGateway;
 
 beforeEach(() => {
     productRepository = new ProductRepositoryFake();
     couponRepository = new CouponRepositoryFake();
     orderRepository = new OrderRepositoryFake();
     currencyGateway = new CurrencyApiFake();
+    deliveryGateway = new DeliveryGateway();
     
 
     checkout = new Checkout(
         currencyGateway,
         productRepository,
         couponRepository,
-        orderRepository
+        orderRepository,
+        deliveryGateway
     );
 });
 

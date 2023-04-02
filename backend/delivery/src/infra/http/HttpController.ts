@@ -6,11 +6,10 @@ export default class HttpController {
 
 	constructor (
 		readonly httpServer: HttpServer, 
-        readonly calculateFregth: CalculateFreight
+        readonly calculateFreigth: CalculateFreight
 	) {
-		httpServer.on("post", "/calculateFregth", async function (params: any, body: any) {
-            console.log(body);
-			const output = await calculateFregth.execute(body);
+		httpServer.on("post", "/calculateFreigth", async function (params: any, body: any) {
+			const output = await calculateFreigth.execute(body);
 			return output;
 		});
 

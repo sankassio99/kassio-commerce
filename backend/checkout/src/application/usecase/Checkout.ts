@@ -5,6 +5,7 @@ import IProductRepository from "../repository/iProductRepository";
 import IOrderRepository from "../repository/iOrderRepository";
 import Order from "../../domain/entities/Order";
 import CurrencyTable from "../../domain/entities/CurrencyTable";
+import IDeliveryGateway, { Input as DeliveryGatewayInput } from "../gateway/IDeliveryGateway";
 
 export default class Checkout {
 
@@ -13,6 +14,7 @@ export default class Checkout {
 		readonly productRepository: IProductRepository,
 		readonly couponRepository: ICouponRepository,
 		readonly orderRepository: IOrderRepository,
+		readonly deliveryGateway: IDeliveryGateway, 
 		readonly currencyTable = new CurrencyTable(),
 	) {
 	}
@@ -22,14 +24,25 @@ export default class Checkout {
 		this.currencyTable.addCurrency("USD", currencies.usd);
 		const order = new Order(input.cpf, this.currencyTable);
 		let freight = 0;
+		const freightInput : DeliveryGatewayInput = { items: [] };
 		if (input.items) {
 			for (const item of input.items) {
 				const product = await this.productRepository.get(item.id);
 				order.addItem(product, item.quantity);
-				const itemFreight = FreightCalculator.calculate(product, item.quantity);
-				freight += itemFreight;
+				freightInput.items.push({
+					width: product.width,
+					height: product.height,
+					length: product.deep,
+					weight: product.weight,
+					id: product.id,
+					quantity: item.quantity,
+				});
 			}
 		}
+		const freightOutput = await this.deliveryGateway.calculateFreight(freightInput);
+		console.log(freightOutput.freight);
+
+		freight = freightOutput.freight;
 		if (input.from && input.to) {
 			order.freight = freight;
 		}

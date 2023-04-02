@@ -37,4 +37,13 @@ export default class Product {
     getVolume() {
 		return this.width/100 * this.height/100 * this.deep/100;
 	}
+
+    getDimensions() {
+        return {
+            width: this.width,
+            height: this.height,
+            length: this.deep,
+            weight: this.weight,
+        }
+    }
 }

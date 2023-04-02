@@ -10,6 +10,8 @@ import ProductRepositoryFake from "./infra/repository/productRepositoryFake";
 import CouponRepositoryFake from "./infra/repository/couponRepositoryFake";
 import OrderRepositoryFake from "./infra/repository/orderRepositoryFake";
 import GetProducts from "./application/usecase/GetProducts";
+import IDeliveryGateway from "./application/gateway/IDeliveryGateway";
+import DeliveryGateway from "./infra/gateway/DeliveryGateway";
 const cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -20,6 +22,7 @@ let currencyGateway: ICurrencyGateway;
 let productRepository: IProductRepository;
 let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
+let deliveryGateway: IDeliveryGateway;
 let output: Output;
 let getProducts: GetProducts;
 
@@ -28,19 +31,20 @@ app.post("/checkout", async function (req: Request, res: Response) {
     couponRepository = new CouponRepositoryFake();
     orderRepository = new OrderRepositoryFake();
     currencyGateway = new CurrencyApiFake();
+    deliveryGateway = new DeliveryGateway();
 
     checkout = new Checkout(
         currencyGateway,
         productRepository,
         couponRepository,
-        orderRepository
+        orderRepository,
+        deliveryGateway
     );
 
     try {
       const output = await checkout.execute(req.body);
       res.json(output);
     } catch (e: any) {
-      console.log(e)
       res.status(422).json({
         message: e.message
       });
