@@ -5,24 +5,20 @@ export default class Product {
     id: string;
     width: number;
     height: number;
-    deep: number;
+    length: number;
     weight: number;
-    quantity: number;
 
-    constructor({ quantity ,width, height,
-        deep: length, weight, id }: {
-            quantity: number, width: number, height: number,
-            deep: number, weight: number, currency? : string, id: string
+    constructor({ width, height, length, weight, id }: {
+            width: number, height: number, length: number, weight: number, id: string
         }) {
         this.id = id;
         this.width = width;
         this.height = height;
-        this.deep = length;
+        this.length = length;
         this.weight = weight;
-        this.quantity = quantity;
     }
 
     getVolume() {
-		return this.width/100 * this.height/100 * this.deep/100;
+		return this.width/100 * this.height/100 * this.length/100;
 	}
 }
