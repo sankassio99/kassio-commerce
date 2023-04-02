@@ -12,7 +12,7 @@ test('Should test freight calculator', async () => {
 		from: "22060030",
 		to: "88015600"
 	};
-    const response = await axios.post("http://localhost:3002/calculateFregth", input);
+    const response = await axios.post("http://localhost:3001/calculateFregth", input);
     const output = response.data;
-    expect(output.freght).toBe(60);
+    expect(output.freight).toBe(60);
 });

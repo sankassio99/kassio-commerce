@@ -9,8 +9,11 @@ export default class HttpController {
         readonly calculateFregth: CalculateFreight
 	) {
 		httpServer.on("post", "/calculateFregth", async function (params: any, body: any) {
-			const output = await calculateFregth.execute();
+            console.log(body);
+			const output = await calculateFregth.execute(body);
 			return output;
 		});
+
+        httpServer.listen(3001);
 	}
 }
