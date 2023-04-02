@@ -40,8 +40,6 @@ export default class Checkout {
 			}
 		}
 		const freightOutput = await this.deliveryGateway.calculateFreight(freightInput);
-		console.log(freightOutput.freight);
-
 		freight = freightOutput.freight;
 		if (input.from && input.to) {
 			order.freight = freight;

@@ -18,6 +18,7 @@ let productRepository: IProductRepository;
 let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
 let deliveryGateway: IDeliveryGateway;
+let stubDeliveryGateway: sinon.SinonStub<any, Promise<any>>;
 
 beforeEach(() => {
     productRepository = new ProductRepositoryFake();
@@ -25,7 +26,6 @@ beforeEach(() => {
     orderRepository = new OrderRepositoryFake();
     currencyGateway = new CurrencyApiFake();
     deliveryGateway = new DeliveryGateway();
-    
 
     checkout = new Checkout(
         currencyGateway,
@@ -34,7 +34,15 @@ beforeEach(() => {
         orderRepository,
         deliveryGateway
     );
+
+    stubDeliveryGateway = sinon.stub(DeliveryGateway.prototype, "calculateFreight").resolves({
+		freight: 30
+	});
 });
+
+afterEach(()=>{
+    stubDeliveryGateway.restore();
+})
 
 test("should save order in database persistence", async () => {
     // use spy when you need verify if function is called 
