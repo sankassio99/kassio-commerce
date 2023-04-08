@@ -11,6 +11,8 @@ import Product from "../src/domain/entities/Product";
 import ICurrencyGateway from "../src/application/gateway/iCurrencyGateway";
 import IDeliveryGateway, { Input, Output } from "../src/application/gateway/IDeliveryGateway";
 import DeliveryGateway from "../src/infra/gateway/DeliveryGateway";
+import ICatalogGateway from "../src/application/gateway/ICatalogGateway";
+import CatalogGateway from "../src/infra/gateway/CatalogGateway";
 
 let checkout: Checkout;
 let currencyGateway: ICurrencyGateway;
@@ -18,6 +20,7 @@ let productRepository: IProductRepository;
 let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
 let deliveryGateway: IDeliveryGateway;
+let catalogGateway: ICatalogGateway;
 let stubDeliveryGateway: sinon.SinonStub<any, Promise<any>>;
 
 beforeEach(() => {
@@ -26,13 +29,15 @@ beforeEach(() => {
     orderRepository = new OrderRepositoryFake();
     currencyGateway = new CurrencyApiFake();
     deliveryGateway = new DeliveryGateway();
+    catalogGateway = new CatalogGateway();
 
     checkout = new Checkout(
         currencyGateway,
         productRepository,
         couponRepository,
         orderRepository,
-        deliveryGateway
+        deliveryGateway,
+        catalogGateway
     );
 
     stubDeliveryGateway = sinon.stub(DeliveryGateway.prototype, "calculateFreight").resolves({
@@ -69,7 +74,7 @@ test("Should create a order with 1 product in dolar value", async function () {
     const stubCurrencyGateway = sinon.stub(CurrencyApiFake.prototype, "getCurrencies").resolves({
 		usd: usdCurrency
 	});
-	const stubProductRepository = sinon.stub(ProductRepositoryFake.prototype, "get").resolves(
+	const stubProductRepository = sinon.stub(CatalogGateway.prototype, "getProduct").resolves(
 		new Product({
             desc: "Iphone 14 - Imported", price: price, height: 5, weight: 5,
             deep: 10, quantity: 1, width: 1, id: "4", currency: "USD",
@@ -79,7 +84,7 @@ test("Should create a order with 1 product in dolar value", async function () {
 	const input = {
 		cpf: "407.302.170-27",
 		items: [
-			{ id: 4, quantity: 1 },
+			{ id: "4", quantity: 1 },
 		]
 	};
 	const output = await checkout.execute(input);

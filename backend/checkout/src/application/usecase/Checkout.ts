@@ -5,6 +5,7 @@ import IOrderRepository from "../repository/iOrderRepository";
 import Order from "../../domain/entities/Order";
 import CurrencyTable from "../../domain/entities/CurrencyTable";
 import IDeliveryGateway, { Input as DeliveryGatewayInput } from "../gateway/IDeliveryGateway";
+import ICatalogGateway from "../gateway/ICatalogGateway";
 
 export default class Checkout {
 
@@ -14,7 +15,8 @@ export default class Checkout {
 		readonly couponRepository: ICouponRepository,
 		readonly orderRepository: IOrderRepository,
 		readonly deliveryGateway: IDeliveryGateway, 
-		readonly currencyTable = new CurrencyTable(),
+		readonly catalogGateway: ICatalogGateway,
+		readonly currencyTable = new CurrencyTable(), 
 	) {
 	}
 
@@ -26,7 +28,7 @@ export default class Checkout {
 		const freightInput : DeliveryGatewayInput = { items: [] };
 		if (input.items) {
 			for (const item of input.items) {
-				const product = await this.productRepository.get(item.id);
+				const product = await this.catalogGateway.getProduct(item.id);
 				order.addItem(product, item.quantity);
 				freightInput.items.push({
 					width: product.width,
@@ -64,7 +66,7 @@ export default class Checkout {
 
 type Input = {
 	cpf: string,
-	items: { id: number, quantity: number }[],
+	items: { id: string, quantity: number }[],
 	coupon?: string,
 	from?: string,
 	to?: string

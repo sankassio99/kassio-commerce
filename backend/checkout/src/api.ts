@@ -12,6 +12,8 @@ import OrderRepositoryFake from "./infra/repository/orderRepositoryFake";
 import GetProducts from "./application/usecase/GetProducts";
 import IDeliveryGateway from "./application/gateway/IDeliveryGateway";
 import DeliveryGateway from "./infra/gateway/DeliveryGateway";
+import ICatalogGateway from "./application/gateway/ICatalogGateway";
+import CatalogGateway from "./infra/gateway/CatalogGateway";
 const cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -23,6 +25,7 @@ let productRepository: IProductRepository;
 let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
 let deliveryGateway: IDeliveryGateway;
+let catalogGateway: ICatalogGateway;
 let output: Output;
 let getProducts: GetProducts;
 
@@ -32,13 +35,15 @@ app.post("/checkout", async function (req: Request, res: Response) {
     orderRepository = new OrderRepositoryFake();
     currencyGateway = new CurrencyApiFake();
     deliveryGateway = new DeliveryGateway();
+    catalogGateway = new CatalogGateway();
 
     checkout = new Checkout(
         currencyGateway,
         productRepository,
         couponRepository,
         orderRepository,
-        deliveryGateway
+        deliveryGateway,
+        catalogGateway
     );
 
     try {
