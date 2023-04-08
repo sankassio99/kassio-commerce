@@ -3,10 +3,7 @@ import IProductRepository from "../repository/iProductRepository";
 
 export default class GetProductsCatalog {
 
-    constructor(readonly productRepository : IProductRepository) {
-
-        
-    }
+    constructor(readonly productRepository : IProductRepository) {}
 
     async execute() : Promise<any> {
         let output : Output = [];

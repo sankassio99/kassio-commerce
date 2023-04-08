@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Product {
-
-	
     id: string;
     desc: string;
     price: number;
