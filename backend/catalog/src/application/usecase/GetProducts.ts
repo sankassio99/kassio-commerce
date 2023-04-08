@@ -6,18 +6,13 @@ export default class GetProducts {
     constructor(readonly productRepository : IProductRepository) { 
     }
 
-    async execute(id : string) : Promise<any> {
-        let output : Output = [];
-        const products = await this.productRepository.getAll();
-
-        products.forEach(product => {
-            output.push({
-                id: product.id,
-                description: product.desc,
-                price: product.price,
-            })
+    async execute(id : string) : Promise<Output> {
+        const product = await this.productRepository.get(id);
+        const output = Object.assign(product, {
+            volume: product.getVolume(),
+            density: product.getDensity(),
         });
-         
+
         return output;
     }
 
@@ -25,6 +20,14 @@ export default class GetProducts {
 
 type Output = {
 	id: string,
-	description: string,
-	price: number
-}[]
+    desc: string,
+    price: number,
+    quantity: number,
+    width: number,
+    height: number,
+    deep: number,
+    weight: number,
+    currency : string,
+    volume: number,
+    density: number,
+}

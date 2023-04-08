@@ -1,4 +1,4 @@
-import GetProducts from "../src/application/usecase/GetProducts";
+import GetProductsCatalog from "../src/application/usecase/GetProductsCatalog";
 import ProductRepositoryFake from "../src/infra/repository/productRepositoryFake";
 import sinon from "sinon";
 import Product from "../src/domain/entities/Product";
@@ -24,7 +24,7 @@ test('Should get all products', async () => {
 		dataFake
 	);
     let productRepository = new ProductRepositoryFake();
-    const getProducts = new GetProducts(productRepository);
+    const getProducts = new GetProductsCatalog(productRepository);
     // Act
     let allProducts : any[] = await getProducts.execute();
     // Assert

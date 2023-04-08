@@ -16,5 +16,5 @@ test('Should get product by id', async () => {
     let product = await getProduct.execute(productId);
     
     // Assert
-    expect(product.name).toBe("Notebook");
+    expect(product.desc).toBe("Notebook");
 });

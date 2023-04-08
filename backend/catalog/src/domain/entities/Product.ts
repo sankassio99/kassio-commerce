@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Product {
+
 	
     id: string;
     desc: string;
@@ -45,5 +46,9 @@ export default class Product {
             length: this.deep,
             weight: this.weight,
         }
+    }
+
+    getDensity(): any {
+        return this.getVolume()/this.weight;
     }
 }

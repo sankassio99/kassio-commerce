@@ -16,8 +16,8 @@ export default class ProductRepositoryFake implements IProductRepository {
         data.jsonProducts.push(input);
     }
 
-    async get(idProduct: number): Promise<any> {
-        const product = data.jsonProducts.find((element) => parseInt(element.id) == idProduct);
+    async get(idProduct: string): Promise<any> {
+        const product = data.jsonProducts.find((element) => element.id == idProduct);
         if (!product) {
             throw new Error(`Product ${idProduct} not found`);
         }
