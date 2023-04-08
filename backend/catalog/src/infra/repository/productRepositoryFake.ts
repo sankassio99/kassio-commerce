@@ -33,6 +33,7 @@ export default class ProductRepositoryFake implements IProductRepository {
             height: product.height,
             deep: product.deep,
             weight: product.weight,
+            id: product.id
         });
     }
 

@@ -15,6 +15,9 @@ export default class ProductController {
 			return output;
 		});
 
-        httpServer.listen(3001);
+		httpServer.on("get", "/products/:id", async function (params: any, body: any) {
+			const output = await getProduct.execute(params.id);
+			return output;
+		});
 	}
 }
