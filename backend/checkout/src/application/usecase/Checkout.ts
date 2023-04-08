@@ -1,6 +1,5 @@
 import ICouponRepository from "../repository/iCouponRepository";
 import ICurrencyGateway from "../gateway/iCurrencyGateway";
-import FreightCalculator from "../../domain/entities/FreightCalculator";
 import IProductRepository from "../repository/iProductRepository";
 import IOrderRepository from "../repository/iOrderRepository";
 import Order from "../../domain/entities/Order";
