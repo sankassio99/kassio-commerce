@@ -1,7 +1,7 @@
 import IProductRepository from "../repository/iProductRepository";
 
 
-export default class GetProducts {
+export default class GetProduct {
 
     constructor(readonly productRepository : IProductRepository) { 
     }
