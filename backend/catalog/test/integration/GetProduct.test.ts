@@ -10,11 +10,11 @@ test('Should get product by id', async () => {
     // Arrange
     let productRepository = new ProductRepositoryFake();
     const getProduct = new GetProducts(productRepository);
+    const productId = "1";
     
     // Act
-    let product = await getProduct.execute();
+    let product = await getProduct.execute(productId);
     
     // Assert
-    expect(allProducts.length).toBe(dataFake.length);
-    expect(stubproductRepository.calledOnce).toBeTruthy();
+    expect(product.name).toBe("Notebook");
 });

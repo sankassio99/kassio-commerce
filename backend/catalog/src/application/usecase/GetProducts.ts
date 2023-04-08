@@ -6,7 +6,7 @@ export default class GetProducts {
     constructor(readonly productRepository : IProductRepository) { 
     }
 
-    async execute() : Promise<any> {
+    async execute(id : string) : Promise<any> {
         let output : Output = [];
         const products = await this.productRepository.getAll();
 
