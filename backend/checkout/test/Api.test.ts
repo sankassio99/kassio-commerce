@@ -106,11 +106,3 @@ test('Should return minimum freight value when its was smaller than minimum', as
     expect(output.freight).toBe(50);
     expect(output.total).toBe(30);
 });
-
-test('Should get all products', async () => {
-    const response = await axios.get("http://localhost:3000/products");
-    const output = response.data;
-    expect(response.status).toBe(200);
-    expect(output != null).toBeTruthy();
-});
-

@@ -9,7 +9,6 @@ import IOrderRepository from "./application/repository/iOrderRepository";
 import ProductRepositoryFake from "./infra/repository/productRepositoryFake";
 import CouponRepositoryFake from "./infra/repository/couponRepositoryFake";
 import OrderRepositoryFake from "./infra/repository/orderRepositoryFake";
-import GetProducts from "./application/usecase/GetProducts";
 import IDeliveryGateway from "./application/gateway/IDeliveryGateway";
 import DeliveryGateway from "./infra/gateway/DeliveryGateway";
 import ICatalogGateway from "./application/gateway/ICatalogGateway";
@@ -26,8 +25,6 @@ let couponRepository: ICouponRepository;
 let orderRepository: IOrderRepository;
 let deliveryGateway: IDeliveryGateway;
 let catalogGateway: ICatalogGateway;
-let output: Output;
-let getProducts: GetProducts;
 
 app.post("/checkout", async function (req: Request, res: Response) {
     productRepository = new ProductRepositoryFake();
@@ -54,15 +51,6 @@ app.post("/checkout", async function (req: Request, res: Response) {
         message: e.message
       });
     }
-});
-
-app.get("/products", async function (req: Request, res: Response) {
-    productRepository = new ProductRepositoryFake();
-    getProducts = new GetProducts(productRepository);
-    let response = await getProducts.execute();
-    res.status(200).json({
-      response
-    });
 });
 
 app.listen(3000);
