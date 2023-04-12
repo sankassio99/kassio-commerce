@@ -1,6 +1,6 @@
 # kassio-commerce
 
-This project was implemented in Branas.io course. A magnific course that help me to improve my hard skills in creation of code with clean design, testable and escalable. 
+This project was implemented in Branas.io course. A magnific course that help me to improve my hard skills in creation of code with clean design, testable and scalable. 
 
 As well, it was important to improve my confidence in decision-making while software engineer in my job roles.
 
